@@ -2,7 +2,7 @@
 
 ## Soal
 
-a. Buatlah Script Github Actions untuk Deploy GitHub Repo ke SSH Instance!
+a. Buatlah Script Github Actions untuk Deploy GitHub Repo ke SSH Instance!\
 b. Buatlah Kubernetes YAML File untuk Deploy App disertai penjelasannya!
 
 ## Solusi

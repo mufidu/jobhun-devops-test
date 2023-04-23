@@ -1,10 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+    # Nama deployment yang akan di-deploy
     name: wordpress
     labels:
         app: wordpress
 spec:
+    # Jumlah replika yang akan dibuat oleh deployment
     replicas: 2
     selector:
         matchLabels:
@@ -17,9 +19,11 @@ spec:
             containers:
                 - name: wordpress
                   image: wordpress:latest
+                  # Environtment variable yang akan digunakan oleh container
                   env:
                       - name: WORDPRESS_DB_HOST
                         value: mysql
+                      # Mengambil value dari Kubernetes Secret
                       - name: WORDPRESS_DB_USER
                         valueFrom:
                             secretKeyRef:
@@ -30,15 +34,18 @@ spec:
                             secretKeyRef:
                                 name: mysql-credentials
                                 key: password
+                  # Port yang akan di-expose oleh container
                   ports:
                       - containerPort: 80
+                  # Mount volume ke container sebagai persistent storage
                   volumeMounts:
                       - name: wordpress-persistent-storage
                         mountPath: /var/www/html
             volumes:
-                - name: wordpress-persistent-storage
+                - name: wordpress-persistent-storage # Nama volume yang akan dibuat
                   persistentVolumeClaim:
-                      claimName: wordpress-pv-claim
+                      claimName: wordpress-pv-claim # Nama PVC yang akan digunakan oleh volume
+
 ---
 apiVersion: v1
 kind: Service

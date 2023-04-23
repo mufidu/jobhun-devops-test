@@ -9,12 +9,15 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
+            # Checkout repository agar GitHub action dapat mengakses code yang ada di repository
             - uses: actions/checkout@v3
 
+            # Set up SSH keys untuk autentikasi ke instance SSH
             - name: Setup SSH
               uses: webfactory/ssh-agent@v0.5.0
               with:
                   ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+            # Deploy Kubernetes menggunakan kubectl
             - name: Deploy to Kubernetes
               run: kubectl apply -f kubernetes.yaml
